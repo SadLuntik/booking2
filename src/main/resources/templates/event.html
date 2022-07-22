@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Запись на событие</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+<h3><span th:text="'Login: ' + ${userName}"></span></h3>
+
+<!--<h3>Filter</h3>-->
+<form th:action="@{/event/filter}" method="get" class="form-horizontal">
+    <!--    <input type="hidden" name="size" value="5">-->
+    <!--    <table class="table table-hover">-->
+    <!--        <tr>-->
+    <!--            <th th:each="pageNumber : ${pageNumbers}" th:with="var = ${pageNumber + 1}">-->
+    <!--                <button th:class="${pageNumber == currentPage}? 'btn btn-success' : 'btn btn-info'" type="submit"-->
+    <!--                        th:name="page"-->
+    <!--                        th:value="${pageNumber}"-->
+    <!--                        th:text="${var}">-->
+    <!--                </button>-->
+    <!--            </th>-->
+    <!--        </tr>-->
+    <!--    </table>-->
+    <div style="..." class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+        <label>
+            <input type="date" th:value="${time != null} ? ${time}" name="time" placeholder="date" class="form-control"/>
+        </label>
+    </div>
+    <div style="..." class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+        <label>
+            <input th:value="${title != null} ? ${title}" name="title" placeholder="title"
+                   class="form-control"/>
+        </label>
+    </div>
+    <br>
+    <div style="..." class="form-group">
+        <div class="col-sm-6 controls">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </div>
+</form>
+<br>
+
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Имя заказчика</th>
+        <th>Название мероприятия</th>
+        <th>Начало</th>
+        <th>Конец</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="event : ${events}">
+        <td th:text="${event.id}"></td>
+        <td th:text="${event.userName}"></td>
+        <td th:text="${event.resourceTitle}"></td>
+        <td th:text="${event.startTime}"></td>
+        <td th:text="${event.endTime}"></td>
+        <td>
+            <!--                        <a th:href="@{'/products/show/' + ${product.productId}}" class="btn btn-primary" th:text="Watch"></a>-->
+            <a th:href="@{'/event/delete/' + ${event.id}}"
+               class="btn btn-danger" th:text="Delete"></a>
+            <!--                        <a th:href="@{'/products/edit/' + ${product.productId}}"-->
+            <!--                           class="btn btn-info" th:text="Edit"></a>-->
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<br>
+<form th:action="@{/event/add}"
+      th:object="${event}" method="post" class="form-horizontal">
+
+    <div style="margin-bottom: 25px" class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+        <label>
+            <input th:field="*{resourceTitle}" placeholder="title (*)" class="form-control"/>
+        </label>
+    </div>
+
+    <div style="margin-bottom: 25px" class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+        <label>
+            <input type="date" th:field="*{startTime}" placeholder="price (*)" class="form-control"/>
+        </label>
+    </div>
+    <div style="margin-bottom: 25px" class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+        <label>
+            <input type="date" th:field="*{endTime}" placeholder="price (*)" class="form-control"/>
+        </label>
+    </div>
+
+    <div style="margin-top: 10px" class="form-group">
+        <div class="col-sm-6 controls">
+            <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+    </div>
+</form>
+<br>
+</body>
+</html>

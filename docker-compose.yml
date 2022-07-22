@@ -1,0 +1,13 @@
+version: '3'
+services:
+  booking:
+    build:
+      context: .
+      dockerfile: booking/Dockerfile
+
+    environment:
+      - password=1
+      - login=postgres
+    ports:
+      - "8080:8080"
+      - "5432:5432"
